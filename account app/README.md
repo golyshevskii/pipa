@@ -9,3 +9,6 @@
 ## urls.py
 > Файл маршрутизаторов.<br/>
 > Routers file.
+## views.py
+> Представления, получение запроса от пользователя + его обработка + возврат ответа пользователю.<br/>
+> Views, receiving a request from the user + processing it + returning a response to the user.
