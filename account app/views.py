@@ -10,6 +10,9 @@ from django.http import HttpResponse
 # импорт класса LoginForm для предоставления формы пользователю
 # import the LoginForm class to present the form to the user
 from .forms import LoginForm
+# импорт декоратора для отображения части веб-сайта для авторизированых пользователей
+# import a decorator to display a portion of the website for logged in users
+from django.contrib.auth.decorators import login_required
 
 
 # определение функции user_login, которая получает запрос POST or GET и отправляющая ответ
@@ -44,4 +47,9 @@ def user_login(request):
         form = LoginForm()
     # отправка ответа пользователю
     # send a response to the user
-    return render(request, 'account/login.html', {'form': form}) 
+    return render(request, 'account/login.html', {'form': form})
+
+
+@login_required 
+def profile(request):
+    return render(request, 'account/profile.html', {'section': 'profile'})
