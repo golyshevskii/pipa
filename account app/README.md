@@ -1,13 +1,12 @@
 # account app
-### RU
 > Приложение account содержит в себе алгоритмы входа, выхода и регистрации пользователя на веб-сайте.<br/>
 > Account app contains algorithms for login, logout and registering a user on the website.
-## forms.py
+### forms.py
 > Создание формы для входа пользователя.<br/>
 > Creating a user login form.
-## urls.py
+### urls.py
 > Файл маршрутизаторов.<br/>
 > Routers file.
-## views.py
+### views.py
 > Представления, получение запроса от пользователя + его обработка + возврат ответа пользователю.<br/>
 > Views, receiving a request from the user + processing it + returning a response to the user.
