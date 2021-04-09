@@ -6,3 +6,6 @@
 ## forms.py
 > Создание формы для входа пользователя.<br/>
 > Creating a user login form.
+## urls.py
+> Файл маршрутизаторов.<br/>
+> Routers file
