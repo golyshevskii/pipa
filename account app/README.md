@@ -8,4 +8,4 @@
 > Creating a user login form.
 ## urls.py
 > Файл маршрутизаторов.<br/>
-> Routers file
+> Routers file.
