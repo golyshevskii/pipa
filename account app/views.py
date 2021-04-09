@@ -29,7 +29,7 @@ def user_login(request):
             # search for a user in the database using the authenticate method
             user = authenticate(username=cd['username'], password=cd['password'])
             # проверка на регистрацию и статус пользователя + отправка ответа
-            # check for user registration and status of a user  + send response
+            # check for user registration and status of a user  + send a response
             if user is not None:
                 if user.is_active:
                     login(request, user)
