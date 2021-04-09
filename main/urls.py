@@ -4,6 +4,8 @@ from django.contrib import admin
 from django.urls import re_path, include
 
 
+# шаблоны маршрутизаторов
+# router templates
 urlpatterns = [
     re_path(r'^admin/', admin.site.urls),
     re_path(r'^account/', include('account.urls')),
