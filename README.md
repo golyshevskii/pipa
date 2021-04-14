@@ -5,4 +5,4 @@
 ### EN
 > Pipa is a social website where you have a personal profile with a board where you can post content that interests you and other users. <br/>
 > Pipa also contains a chat room where you can communicate freely with the users of the website.
-# ![PIPA](pipa1.png) ![PIPA](pipa1.png) ![PIPA](pipa1.png)
+# ![PIPA](pipa1.png) ![PIPA](pipa1.png) ![PIPA](pipa1.png) ![PIPA](pipa1.png) ![PIPA](pipa1.png) ![PIPA](pipa1.png)
