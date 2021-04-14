@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import Profile
+# импорт модели Profile, для добавления полей на страницу администрации сайта
+# import of the Profile model, to add fields to the site administration page
+from .models import Profile 
 
 
 class ProfileAdmin(admin.ModelAdmin):
