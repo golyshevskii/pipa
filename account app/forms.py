@@ -20,7 +20,7 @@ class LoginForm(forms.Form):
 # user registration form
 class UserRegistrationForm(UserCreationForm):
     password = forms.CharField(label='password', widget=forms.PasswordInput)  # поле для ввода пароля; field for entering password
-    password2 = forms.CharField(label='repeat password', widget=forms.PasswordInput)  # repeated password entry field
+    password2 = forms.CharField(label='repeat password', widget=forms.PasswordInput)  # повторное поле для пароля; repeated password entry field
 
     # опции класса UserRegistrationForm
     # class options UserRegistrationForm
