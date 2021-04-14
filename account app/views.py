@@ -50,6 +50,52 @@ def user_login(request):
     return render(request, 'account/login.html', {'form': form})
 
 
+# декотратор для проверки авторизации пользователя
+# decorator for checking user authorization
 @login_required 
 def profile(request):
     return render(request, 'account/profile.html', {'section': 'profile'})
+
+
+# метод для представления формы при регистрации пользователя
+# method for submitting a form when registering a user
+def register(request):
+    # проверка на запрос пользователя
+    # check for user request
+    if request.method == 'POST':
+        user_form = UserRegistrationForm(request.POST)
+        # проверка на валидность формы
+        # check for the validity of the form
+        if user_form.is_valid():
+            # создание нового пользователя, но предварительно не сохраняя его в базе данных
+            # creating a new user, but without first saving it in the database
+            new_user = user_form.save(commit=False)
+            # установка пароля пользователю
+            # setting a password to the user
+            new_user.set_password(user_form.cleaned_data['password'])
+            # окончательное сохранение данных о пользователе в базе данных
+            # final saving of user data in the database
+            new_user.save()
+            # создание профиля для пользователя
+            # creating a profile for a user
+            profile = Profile.objects.create(user=new_user)
+            return render(request, 'account/register_done.html', {'new_user': new_user})
+    else:
+        user_form = UserRegistrationForm()
+    return render(request, 'account/register.html', {'user_form': user_form})
+
+
+# метод для представления формы редактирования информации о пользователе
+# method for submitting a form when editing user information
+@login_required
+def edit(request):
+    if request.method == 'POST':
+        user_form = UserEditForm(instance=request.user, data=request.POST)
+        profile_form = ProfileEditForm(instance=request.user.profile, data=request.POST, files=request.FILES)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+    else:
+        user_form = UserEditForm(instance=request.user)
+        profile_form = ProfileEditForm(instance=request.user.profile)
+    return render(request, 'account/edit.html', {'user_form': user_form, 'profile_form': profile_form})
