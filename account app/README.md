@@ -10,3 +10,6 @@
 ### views.py
 > Представления, получение запроса от пользователя + его обработка + возврат ответа пользователю.<br/>
 > Views, receiving a request from the user + processing it + returning a response to the user.
+### admin.py
+> Представления моделей на странице адсинистрации сайта.<br/>
+> Model views on the site administration page.
