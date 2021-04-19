@@ -2,8 +2,8 @@
 > Приложение account содержит в себе алгоритмы входа, выхода, регистрации, настройки профиля и активации пользователя на веб-сайте.
 > The account application contains algorithms for logging in, logging out, registering, setting up a profile and activating a user on a website.
 ### forms.py
-> Создание формы для входа пользователя.<br/>
-> Creating a user login form.
+> Создание форм регистрации и настроек пользователя.<br/>
+> Creation of registration forms and user settings.
 ### urls.py
 > Файл маршрутизаторов.<br/>
 > Routers file.
