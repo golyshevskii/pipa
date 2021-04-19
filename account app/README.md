@@ -19,3 +19,6 @@
 ### authentication.py
 > Определение авторизации пользователя с помощью email адреса.<br/>
 > Defining user authorization using an email address.
+### models.py
+> Создание базы данных пользователя.<br/>
+> User database creation.
