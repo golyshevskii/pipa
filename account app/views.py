@@ -1,101 +1,133 @@
-# импорт метода render для формирования представления на запрос пользователя
-# import of the render method to generate a view for a user request
-from django.shortcuts import render
-# импорт метода authenticate для проверки валидности пользователя и метода login для авторизации пользователя в текущей сессии
-# import of the authenticate method to check the validity of the user and the login method to authorize the user in the current session
-from django.contrib.auth import authenticate, login
-# импорт метода HttpResponse для отправки ответа об успешной авторизации пользователя или наоборот
-# import of the HttpResponse method to send a response about successful user authorization or vice versa
-from django.http import HttpResponse
-# импорт класса LoginForm для предоставления формы пользователю
-# import the LoginForm class to present the form to the user
-from .forms import LoginForm
-# импорт декоратора для отображения части веб-сайта для авторизированых пользователей
-# import a decorator to display a portion of the website for logged in users
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.base import TemplateView
+from django.views.generic.edit import DeleteView, CreateView, UpdateView
+from django.core.signing import BadSignature
+from django.urls import reverse_lazy
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.views import PasswordChangeView, LoginView, LogoutView
+from .forms import UserRegistrationForm, UserEditForm
+from .models import Profile
+# иморт экземпляра класса Signer для экономии оперативной памяти и определения метода активации пользователя
+# import an instance of the Signer class to save RAM and define the user activation method
+from .utilities import signer
 
 
-# определение функции user_login, которая получает запрос POST or GET и отправляющая ответ
-# defining a user_login function that receives a POST or GET request and sends a response
-def user_login(request):
-    # проверка запроса
-    # check request
-    if request.method == 'POST': 
-        form = LoginForm(request.POST)  # определение формы; defining the form
-        # проверка формы на валидность
-        # check the form for validity
-        if form.is_valid():
-            # получение валидных данных из формы
-            # getting valid data from the form 
-            cd = form.cleaned_data  # метод cleaned_data позволяет получить данные валидной формы; the cleaned_data method allows you to get the data of a valid form
-            # поиск пользователя в базе данных с помощью метода authenticate
-            # search for a user in the database using the authenticate method
-            user = authenticate(username=cd['username'], password=cd['password'])
-            # проверка на регистрацию и статус пользователя + отправка ответа
-            # check for user registration and status of a user  + send a response
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    return HttpResponse('Authenticated successfully')
-                else:
-                    return HttpResponse('Disabled account')
-            else:
-                return HttpResponse('Invalid login')
-    else:
-        # если был получен запрос, например, GET, то пользователю отправляется пустая форма для заполнения
-        # if a request was received, for example, GET, then an empty form is sent to the user to fill out
-        form = LoginForm()
-    # отправка ответа пользователю
-    # send a response to the user
-    return render(request, 'account/login.html', {'form': form})
+# класс представления формы для входа пользователя на сайт
+# class of form submission for user login to the site
+class Login(LoginView):
+    template_name = 'account/login.html'
 
 
-# декотратор для проверки авторизации пользователя
-# decorator for checking user authorization
-@login_required 
+# класс представления формы для выхода пользователя
+# class of form submission for user logout
+class Logout(LoginRequiredMixin, LogoutView):
+    template_name = 'account/logout.html'
+
+
+# вывод страницы профиля пользователя
+# display user profile page
+@login_required  # декоратор требующий авторизации пользователя; decorator requiring user authorization
 def profile(request):
-    return render(request, 'account/profile.html', {'section': 'profile'})
+    return render(request, 'account/profile.html')
 
 
-# метод для представления формы при регистрации пользователя
-# method for submitting a form when registering a user
-def register(request):
-    # проверка на запрос пользователя
-    # check for user request
-    if request.method == 'POST':
-        user_form = UserRegistrationForm(request.POST)
-        # проверка на валидность формы
-        # check for the validity of the form
-        if user_form.is_valid():
-            # создание нового пользователя, но предварительно не сохраняя его в базе данных
-            # creating a new user, but without first saving it in the database
-            new_user = user_form.save(commit=False)
-            # установка пароля пользователю
-            # setting a password to the user
-            new_user.set_password(user_form.cleaned_data['password'])
-            # окончательное сохранение данных о пользователе в базе данных
-            # final saving of user data in the database
-            new_user.save()
-            # создание профиля для пользователя
-            # creating a profile for a user
-            profile = Profile.objects.create(user=new_user)
-            return render(request, 'account/register_done.html', {'new_user': new_user})
+# класс для представления формы при регистрации пользователя
+# class for form submission during user registration
+class Register(CreateView):
+    model = Profile
+    form_class = UserRegistrationForm
+    template_name = 'account/register.html'
+    success_url = reverse_lazy('account:register_done')
+
+
+# класс для уведомления об успешной регистрации пользователя
+# class for notification of successful user registration
+class RegisterDone(TemplateView):
+    template_name = 'account/register_done.html'
+
+
+# метод для подтверждения активации
+# method to confirm activation
+def user_activate(request, sign):
+    try:
+        # получение электронной подписи
+        # obtaining an electronic signature
+        username = signer.unsign(sign)
+    except BadSignature:
+        return render(request, 'account/bad_signature.html')
+    # извлечение пользователя из базы данных
+    # get a user from the database
+    user = get_object_or_404(Profile, username=username)
+    # проверка на акстивацию
+    # check for activation
+    if user.is_activated:
+        template = 'account/user_is_activated.html'
     else:
-        user_form = UserRegistrationForm()
-    return render(request, 'account/register.html', {'user_form': user_form})
+        template = 'account/activation_done.html'
+        user.is_active = True
+        user.is_activated = True
+        user.save()
+    return render(request, template)
 
 
-# метод для представления формы редактирования информации о пользователе
-# method for submitting a form when editing user information
-@login_required
-def edit(request):
-    if request.method == 'POST':
-        user_form = UserEditForm(instance=request.user, data=request.POST)
-        profile_form = ProfileEditForm(instance=request.user.profile, data=request.POST, files=request.FILES)
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
-    else:
-        user_form = UserEditForm(instance=request.user)
-        profile_form = ProfileEditForm(instance=request.user.profile)
-    return render(request, 'account/edit.html', {'user_form': user_form, 'profile_form': profile_form})
+# класс представления формы для редактирования информации о пользователе
+# form submission class for editing user information
+class UserEdit(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    model = Profile
+    form_class = UserEditForm
+    template_name = 'account/edit.html'
+    success_url = reverse_lazy('account:profile')
+    success_message = 'yami! profile updated successfully'
+
+    # метод получения индекса пользователя в базе данных
+    # method for getting the user's index in the database
+    def setup(self, request, *args, **kwargs):
+        self.user_id = request.user.pk
+        return super().setup(request, *args, **kwargs)
+
+    # метод извлечения исправляемого поля
+    # method to retrieve the field to be corrected
+    def get_object(self, queryset=None):
+        if not queryset:
+            queryset = self.get_queryset()
+        return get_object_or_404(queryset, pk=self.user_id)
+
+
+# класс для изменения пароля пользователя
+# class for changing user password
+class PasswordChange(LoginRequiredMixin, SuccessMessageMixin, PasswordChangeView):
+    template_name = 'account/password_change_form.html'
+    success_url = reverse_lazy('account:profile')
+    success_message = 'password changed'
+
+
+# класс для удаления пользователя
+# class for deleting a user
+class UserDelete(LoginRequiredMixin, DeleteView):
+    model = Profile
+    template_name = 'account/delete_user.html'
+    success_url = reverse_lazy('account:delete_user_done')
+
+    def setup(self, request, *args, **kwargs):
+        self.user_id = request.user.pk
+        return super().setup(request, *args, **kwargs)
+
+    # предварительный выход из аккаунта перед удалением пользователя
+    # preliminary log out of the account before deleting the user
+    def post(self, request, *args, **kwargs):
+        logout(request)
+        return super().post(request, *args, **kwargs)
+
+    def get_object(self, queryset=None):
+        if not queryset:
+            queryset = self.get_queryset()
+        return get_object_or_404(queryset, pk=self.user_id)
+
+
+# класс для уведомления об успешном удалении пользователя
+# class for notification of successful user deletion
+class UserDeleteDone(TemplateView):
+    template_name = 'account/delete_user_done.html'
