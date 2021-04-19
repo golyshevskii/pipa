@@ -22,6 +22,6 @@
 ### models.py
 > Создание базы данных пользователя.<br/>
 > User database creation.
-### utilites.py
+### utilities.py
 > Формирование письма для активации пользователя.<br/>
 > Formation of a letter to activate the user.
