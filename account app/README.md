@@ -1,6 +1,6 @@
 # account app
-> Приложение account содержит в себе алгоритмы входа, выхода и регистрации пользователя на веб-сайте.<br/>
-> Account app contains algorithms for login, logout and registering a user on the website.
+> Приложение account содержит в себе алгоритмы входа, выхода, регистрации, настройки профиля и активации пользователя на веб-сайте.<br/>
+> The account application contains algorithms for logging in, logging out, registering, setting up a profile and activating a user on a website.
 ### forms.py
 > Создание формы для входа пользователя.<br/>
 > Creating a user login form.
