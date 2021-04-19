@@ -13,3 +13,6 @@
 ### admin.py
 > Представления моделей на странице администрации сайта.<br/>
 > Model views on the site administration page.
+### apps.py
+> Определение сигнала для отправки сообщений пользователям + конфигурации приложения.<br/>
+> Defining a signal to send messages to users + application configuration.
