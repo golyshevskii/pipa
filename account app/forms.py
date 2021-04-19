@@ -1,57 +1,66 @@
-# импорт объекта forms
-# import object forms
 from django import forms
-# импорт объектов User, UserCreationForm, Profile для создания формы регистрации и настроек пользователя
-# import objects User, UserCreationForm, Profile to create registration form and user settings
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+# импорт метода password_validation для проверки валидности пароля
+# import password_validation method to check password validity
+from django.contrib.auth import password_validation
+from django.core.exceptions import ValidationError
 from .models import Profile
+# импорт экземпляра user_registered для отправки сообщения пользователю с ссылкой активации аккаунта
+# import of user_registered instance to send a message to the user with an account activation link
+from .apps import user_registered
 
-
-# класс LoginForm для создания формы входа на веб-сайт + наследование объектов класса Form
-# class LoginForm to create a login form for the website + inheritance of objects of the Form class
-class LoginForm(forms.Form):        
-    # определение полей для логина и пароля
-    # defining fields for login and password
-    username = forms.CharField()             
-    password = forms.CharField(widget=forms.PasswordInput)  # ключ widget для скрытия ввода пароля пользователем; widget key to hide user password input
 
 # форма для регистрации пользователя
 # user registration form
-class UserRegistrationForm(UserCreationForm):
-    password = forms.CharField(label='password', widget=forms.PasswordInput)  # поле для ввода пароля; field for entering password
-    password2 = forms.CharField(label='repeat password', widget=forms.PasswordInput)  # повторное поле для пароля; repeated password entry field
+class UserRegistrationForm(forms.ModelForm):
+    email = forms.EmailField(required=True)
+    password1 = forms.CharField(label='password', widget=forms.PasswordInput,
+                                help_text=password_validation.password_validators_help_text_html())
+    password2 = forms.CharField(label='repeat password', widget=forms.PasswordInput)
 
-    # опции класса UserRegistrationForm
-    # class options UserRegistrationForm
+    # метод clean_password1 для проверки валидности пароля1
+    # method clean_password1 to check if password1 is valid
+    def clean_password1(self):
+        password1 = self.cleaned_data['password1']
+        if password1:
+            password_validation.validate_password(password1)
+        return password1
+
+    # метод clean для проверки равенства двух паролей
+    # clean method to check if two passwords are equal
+    def clean(self):
+        super().clean()
+        password1 = self.cleaned_data['password1']
+        password2 = self.cleaned_data['password2']
+        if password1 and password2 and password1 != password2:
+            errors = {'password2': ValidationError("ops! passwords didn't match", code='password_mismatch')}
+            raise ValidationError(errors)
+
+    # медот для предварительного сохранения данных о новом пользователе
+    # method for pre-saving data about a new user
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data['password1'])
+        user.is_active = False     # определение ключей активности и активации пользователя
+        user.is_activated = False  # defining the keys of activity and activation of the user
+        if commit:
+            user.save()
+        # сигнал для отправки сообщения пользователю с ссылкой активации аккаунта
+        # signal to send a message to the user with an account activation link
+        user_registered.send(UserRegistrationForm, instance=user)
+        return user
+    
+    # нстройки класса; class settings
     class Meta:
-        # объявление модели User, которая содержит в себе необходимые поля для заполнения формы
-        # declaration of the User model, which contains the necessary fields to fill out the form
-        model = User
-        # выбор полей из модели User, которые будут включены в форму
-        # selection of fields from the User model that will be included in the form
-        fields = ('username', 'email')
-
-    # определение метода для проверки на равенство паролей в поле password и password2
-    # definition of a method for checking for equality of passwords in the password and password2 fields
-    def clean_password2(self):
-        cd = self.cleaned_data
-        if cd['password'] != cd['password2']:
-            raise forms.ValidationError("ops! passwords don't match")
-        return cd['password2']
+        model = Profile
+        fields = ('username', 'email', 'password1', 'password2')
 
     
 # класс для создания формы настроек пользователя
 # class for creating user settings form
 class UserEditForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ('first_name', 'last_name', 'email')
+    email = forms.EmailField(required=True)
 
-
-# класс для создания формы настроек пользователя
-# class for creating user settings form
-class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('date_of_birth', 'photo')
+        fields = ('username', 'first_name', 'last_name', 'email',
+                  'date_of_birth', 'photo')
