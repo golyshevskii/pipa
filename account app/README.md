@@ -16,3 +16,6 @@
 ### apps.py
 > Определение сигнала для отправки сообщений пользователям + конфигурации приложения.<br/>
 > Defining a signal to send messages to users + application configuration.
+### authentication.py
+> Определение авторизации пользователя с помощью email адреса.<br/>
+> Defining user authorization using an email address.
