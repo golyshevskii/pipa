@@ -1,2 +1,2 @@
 # static files / статические файлы
-> CSS, images.
+> CSS, fonts, images.
