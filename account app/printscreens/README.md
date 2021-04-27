@@ -1,7 +1,7 @@
 # login page
 ![PIPA](pipa(login).png)
 # registration page
-![PIPA](pipa(registartion).png)
+![PIPA](pipa(registration).png)
 # profile page
 ![PIPA](pipa(profile).png)
 # logout page
