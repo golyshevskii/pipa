@@ -6,21 +6,25 @@ from .models import Message
 
 class ChatConsumer(AsyncWebsocketConsumer):
     # присоединение пользователя в группу чата
+    # joining a user to a chat group
     async def connect(self):
         self.room_group_name = "yami"
         await self.channel_layer.group_add(self.room_group_name, self.channel_name)
         await self.accept()
 
     # выход пользователя из чата
+    # user logout from chat
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
 
     # создание сообщения
+    # create a message
     @database_sync_to_async
     def new_message(self, message):
         Message.objects.create(text=message)
 
     # получение сообщения
+    # receive message
     async def receive(self, text_data=None, bytes_data=None):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
