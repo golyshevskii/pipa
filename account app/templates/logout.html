@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Logged out{% endblock %}
+{% block content %}
+<div class="content">
+    <a class="a1" href="https://pointerpointer.com/" target="_blank">out</a><br>
+    <p class="p1">you have been successfully logget out</p>
+    <a class="reglink" href="{% url 'account:login' %}">login again?</a><br>
+    <a class="reglink" href="{% url 'account:login' %}"><img class="cry1" src="{% static 'images/cat1.png' %}" height="110px" width="110px"></a>
+</div>
+{% endblock %}

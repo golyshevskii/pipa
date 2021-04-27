@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    {% load static %}
+    <head>
+        <meta charset="UTF-8">
+        <link rel="icon" href="{% static 'images/icon1.png'%}" sizes="32x32">
+        <link rel="stylesheet" href="{% static 'account/base.css' %}">
+        <title>{% block title %}Pipa{% endblock %}</title>
+    </head>
+    <body>
+      {% if messages %}
+        {% for message in messages %}
+          <p class="{{ message.tags }}">{{ message }} <a href="{% url 'account:profile' %}" class="{{ message.tags }}">✖</a></p>
+        {% endfor %}
+      {% endif %}
+      <img class="icon1" src="{% static 'images/icon1.png' %}" height="90px" width="90px">
+      <div class="hellologblock">
+        {% if request.user.is_authenticated %}
+          <a class="loglink" href="{% url 'account:logout' %}">
+            {% if request.user.first_name %}
+              {{ request.user.first_name }}=logout?
+            {% else %}
+              {{ request.user.username }}=logout?
+            {% endif %}
+          </a>
+        {% else %}
+          <a class="loglink" href="{% url 'account:login' %}">login</a>
+        {% endif %}
+      </div>
+      {% if request.user.is_authenticated %}
+      <div class="menu">
+          <button onclick="myFunction()" class="menubtn">menu</button>
+          <div id="mymenu" class="menu-content">
+            <a href="{% url 'account:profile' %}">profile</a><br>
+            <a href="{% url 'board:profile_board' %}">board</a><br>
+            <a href="{% url 'chat:chatroom' %}">chatroom</a>
+          </div>
+      </div><br>
+      {% endif %}
+      <script>
+            function myFunction() {
+                document.getElementById("mymenu").classList.toggle("show");
+            }
+          
+            window.onclick = function(event) {
+              if (!event.target.matches('.menubtn')) {
+            
+                var dropdowns = document.getElementsByClassName("menu-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                  var openDropdown = dropdowns[i];
+                  if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                  }
+                }
+              }
+            }
+      </script>
+      {% block content %}
+      {% endblock %}
+    </body>
+</html>

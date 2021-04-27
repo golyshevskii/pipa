@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Activation{% endblock %}
+{% block content %}
+<div class="content">
+    <р class="p1">ops...activation error</р>
+    <а class="reglink" href="{% url 'account:register' %}">register</а>
+    <a class="reglink" href="{% url 'account:register' %}"><img class="rainbow1" src="{% static 'images/rainbow1.gif' %}" height="90px" width="90px"></a>
+</div>
+{% endblock %}

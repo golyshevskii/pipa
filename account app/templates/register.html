@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Create an account{% endblock %}
+{% block content %}
+<div class="content">
+    <a class="a1" href="https://chrismckenzie.com/" target="_blank">pipa</a><br><br>
+    {% if user_form.errors %}
+        <p class="p1">username = required 150 characters or fewer letters digits and @/./+/-/_ only
+                      password = can’t be too similar to your other personal information 
+                               = can’t be entirely numeric 
+                               = can’t be a commonly used password
+                               = must contain at least 8 characters
+        </p><br><br>
+    {% else %}
+        <p class="p1">please sign up using the following form</p><br><br>
+    {% endif %}
+    <form class="form" action="." method="post">
+        <a class="form">{{ form.username.label_tag }} {{ form.username }}</a><br>
+        <a class="form">{{ form.email.label_tag }} {{ form.email }}</a><br><br>
+        <a class="form">{{ form.password1.label_tag }} {{ form.password1 }}</a><br>
+        <a class="form">{{ form.password2.label_tag }} {{ form.password2 }}</a><br>
+        {% csrf_token %}
+        <input class="input" type="submit" value="create an account">
+    </form><br><br>
+    <a class="reglink" href="{% url 'account:register' %}"><img class="heart1" src="{% static 'images/cube1.gif' %}" height="90px" width="90px"></a>
+</div>
+{% endblock %}

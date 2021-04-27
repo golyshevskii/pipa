@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<div class="content">
+    <a class="a1" href="https://chrismckenzie.com/" target="_blank">yami</a><br>
+    {% if request.user.is_authenticated %}
+        <p class="p1">you are already having fun<br>{% if request.user.first_name %}{{ request.user.first_name }}{% else %}{{ request.user.username }}{% endif %}</p><br>
+        <a class="reglink" href="{% url 'account:profile' %}"><img class="cry1" src="{% static 'images/cat1.png' %}" height="110px" width="110px"></a>
+    {% else %}
+        {% if form.errors %}
+            <p class="p1">ops!<br> username and password didn't match</p><br>
+        {% endif %}
+        <form class="form" action="{% url 'account:login' %}" method="post">
+            <a class="form">{{ form.username.label_tag }} {{ form.username }}</a><br>
+            <a class="form">{{ form.password.label_tag }} {{ form.password }}</a>
+            {% csrf_token %}
+            <input class="input" type="hidden" name="next" value="{{ next }}"/><br>
+            <input class="input" type="submit" value="login">
+        </form><br>
+        <a class="forgottenlink" href="{% url 'account:password_reset' %}">forgotten your password?</a><br>
+        <a class="loglinkgoogle" href="{% url 'social:begin' 'google-oauth2' %}">login with google</a><br>
+        <a class="reglink" href="{% url 'account:register' %}">register</a>
+        <a class="reglink" href="{% url 'account:register' %}"><img class="rainbow1" src="{% static 'images/rainbow1.gif' %}" height="90px" width="90px"></a>
+    {% endif %}
+</div>
+{% endblock %}

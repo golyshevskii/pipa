@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+<div class="content">
+    <p class="p1">{% if request.user.first_name %}{{ request.user.first_name }}{% else %}{{ request.user.username }}{% endif %} profile</p1><br><br>
+    <a class="editlink" href="{% url 'account:edit' %}">edit profile?</a><br>
+    <a class="reglink" href="{% url 'account:edit' %}"><img class="heart1" src="{% static 'images/cube1.gif' %}" height="90px" width="90px"></a>
+</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Game over{% endblock %}
+{% block content %}
+<div class="content">
+    <a class="reglink" href="https://pointerpointer.com/" target="_blank"><img class="cry1" src="{% static 'images/cry1.gif' %}" height="120px" width="120px"></a>
+    <p class="p1">user deleted...</p>
+    <a class="reglink" href="{% url 'account:register' %}">have fun again?</a>
+    <a class="reglink" href="{% url 'account:register' %}"><img class="rainbow1" src="{% static 'images/rainbow1.gif' %}" height="90px" width="90px"></a>
+</div>
+{% endblock %}

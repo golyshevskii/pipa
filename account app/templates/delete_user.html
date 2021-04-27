@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Delete user{% endblock %}
+{% block content %}
+<div class="content">
+    <a class="reglink"><img class="cry1" src="{% static 'images/cry1.gif' %}" height="120px" width="120px"></a>
+    <form class="form" method="post">{% csrf_token %}
+        <p class="p1">are you sure you want to delete<br>"{{ object }}"?</p>
+        <input class="input" type="submit" value="confirm">
+    </form>
+</div>
+{% endblock %}

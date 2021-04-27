@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Edit your account{% endblock %}
+{% block content %}
+<div class="content">
+    <p class="p1">{{ request.user.first_name }} settings</p><br>
+    <form class="form" action="." method="post" enctype="multipart/form-data">
+        <a class="form">{{ form.username.label_tag }} {{ form.username }}</a><br>
+        <a class="form">{{ form.first_name.label_tag }} {{ form.first_name }}</a><br>
+        <a class="form">{{ form.last_name.label_tag }} {{ form.last_name }}</a><br><br>
+        <a class="form">{{ form.email.label_tag }} {{ form.email }}</a><br>
+        <a class="form">{{ form.date_of_birth.label_tag }} {{ form.date_of_birth }}</a><br><br>
+        <a class="form">{{ form.photo.label_tag }} {{ form.photo }}</a><br>
+        {% csrf_token %}
+        <input class="input" type="submit" value="save changes"><br><br>
+        <a class="passwordlink" href="{% url 'account:password_change' %}">change your password?</a>
+        <a class="dellink" href="{% url 'account:delete_user' %}">delete account?</a>
+    </form>
+</div>
+{% endblock %}

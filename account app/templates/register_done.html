@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Welcome{% endblock %}
+{% block content %}
+<div class="content">
+    <a class="a1" href="https://chrismckenzie.com/" target="_blank">yami <img class="heart1" src="{% static 'images/heart1.png' %}" height="70px" width="70px"> pipa</a><br>
+    <p class="p1">your account has been successfully created</p><br>
+    <p class="p1">now you need to verify your identity<br>by clicking on the link<br>that we sent to your email</p><br>
+    <a class="reglink" href="{% url 'account:login' %}"><img class="rainbow1" src="{% static 'images/rainbow1.gif' %}" height="90px" width="90px"></a>
+</div>
+{% endblock %}
