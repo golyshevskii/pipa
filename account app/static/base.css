@@ -1,0 +1,471 @@
+@font-face { 
+    font-family: "ElectronicHighway"; 
+    src: url("fonts/ElectronicHighway.otf");
+}
+@font-face { 
+    font-family: "Arcade"; 
+    src: url("fonts/Arcade.ttf");
+}
+
+
+@keyframes moveDown{
+    from {
+      transform: translateY(-400%);
+    }
+    to {
+      transform: translateY(0%);
+    }
+}
+
+@keyframes moveRight{
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0%);
+    }
+}
+
+@keyframes moveUp{
+    from {
+      transform: translateY(+100%);
+    }
+    to {
+      transform: translateY(0%);
+    }
+}
+
+@-webkit-keyframes bounceIn {
+0%, 20%, 40%, 60%, 80%, 100% {
+-webkit-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+}
+0% {
+opacity: 0;
+-webkit-transform: scale3d(.3, .3, .3);
+transform: scale3d(.3, .3, .3);
+}
+20% {
+-webkit-transform: scale3d(1.1, 1.1, 1.1);
+transform: scale3d(1.1, 1.1, 1.1);
+}
+40% {
+-webkit-transform: scale3d(.9, .9, .9);
+transform: scale3d(.9, .9, .9);
+}
+60% {
+opacity: 1;
+-webkit-transform: scale3d(1.03, 1.03, 1.03);
+transform: scale3d(1.03, 1.03, 1.03);
+}
+80% {
+-webkit-transform: scale3d(.97, .97, .97);
+transform: scale3d(.97, .97, .97);
+}
+100% {
+opacity: 1;
+-webkit-transform: scale3d(1, 1, 1);
+transform: scale3d(1, 1, 1);
+}
+}
+@keyframes bounceIn {
+0%, 20%, 40%, 60%, 80%, 100% {
+-webkit-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+}
+0% {
+opacity: 0;
+-webkit-transform: scale3d(.3, .3, .3);
+transform: scale3d(.3, .3, .3);
+}
+20% {
+-webkit-transform: scale3d(1.1, 1.1, 1.1);
+transform: scale3d(1.1, 1.1, 1.1);
+}
+40% {
+-webkit-transform: scale3d(.9, .9, .9);
+transform: scale3d(.9, .9, .9);
+}
+60% {
+opacity: 1;
+-webkit-transform: scale3d(1.03, 1.03, 1.03);
+transform: scale3d(1.03, 1.03, 1.03);
+}
+80% {
+-webkit-transform: scale3d(.97, .97, .97);
+transform: scale3d(.97, .97, .97);
+}
+100% {
+opacity: 1;
+-webkit-transform: scale3d(1, 1, 1);
+transform: scale3d(1, 1, 1);
+}
+} 
+
+
+
+.icon1 {
+    display: flex;
+    float: right;
+}
+
+.rainbow1 {
+    display: block;
+    margin: 0 auto; 
+}
+
+.cry1 {
+    display: block;
+    margin: 0 auto;
+}
+
+.heart1 {
+    display: inline-block;
+    margin: 0 auto; 
+}
+
+.hellologblock {
+    display: inline-block;
+    height: 100%;
+}
+
+
+
+.loglink {
+    font-family: "Arcade";
+    font-size: 100px;
+    color: rgb(250, 249, 239);
+    text-shadow: 1px 1px 1px rgb(230, 227, 201),
+                 2px 2px 2px rgb(78, 78, 78);
+    text-decoration: none;
+    text-transform: lowercase;
+    transition: 0.5s;
+    cursor: pointer;
+}
+.loglink:hover {
+    color: rgb(129, 253, 191);
+}
+
+.loglinkgoogle {
+    font-family: "Arcade";
+    font-size: 120px;
+    color: rgb(250, 249, 239);
+    text-shadow: 1px 1px 1px rgb(230, 227, 201),
+                 2px 2px 2px rgb(78, 78, 78);
+    background-color: rgba(0, 0, 0, 0);
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.7s;
+}
+.loglinkgoogle:hover {
+    color: pink;
+    outline: none;
+}
+
+.reglink {
+    font-family: "Arcade";
+    font-size: 120px;
+    color: rgb(250, 249, 239);
+    text-shadow: 1px 1px 1px rgb(230, 227, 201),
+                 2px 2px 2px rgb(78, 78, 78);
+    text-align: center;
+    text-decoration: none;
+    transition: 0.5s;
+    cursor: pointer;
+}
+.reglink:hover {
+    color:pink;
+}
+
+.addlink {
+    font-family: "Arcade";
+    font-size: 120px;
+    color: rgb(250, 249, 239);
+    text-shadow: 1px 1px 1px rgb(230, 227, 201),
+                 2px 2px 2px rgb(78, 78, 78);
+    text-align: center;
+    text-decoration: none;
+    transition: 0.5s;
+    cursor: pointer;
+}
+.addlink:hover {
+    color:pink;
+}
+
+.forgottenlink {
+    font-family: "ElectronicHighway";
+    font-size: 30px;
+    color: rgb(129, 253, 191);
+    text-shadow: 1px 1px 1px rgb(230, 227, 201),
+                 2px 2px 2px rgb(78, 78, 78);
+    text-align: center;
+    text-decoration: none;
+    transition: 0.5s;
+    cursor: pointer;
+}
+.forgottenlink:hover {
+    color: rgb(250, 249, 239);
+}
+
+.passwordlink {
+    font-family: "ElectronicHighway";
+    font-size: 30px;
+    color: rgb(129, 253, 191);
+    text-shadow: 1px 1px 1px rgb(230, 227, 201),
+                 2px 2px 2px rgb(78, 78, 78);
+    text-align: center;
+    text-decoration: none;
+    transition: 0.5s;
+    cursor: pointer;
+}
+.passwordlink:hover {
+    color: rgb(250, 249, 239);
+}
+
+.dellink {
+    font-family: "ElectronicHighway";
+    font-size: 30px;
+    color: rgb(250, 249, 239);
+    text-shadow: 1px 1px 1px rgb(230, 227, 201),
+                 2px 2px 2px rgb(78, 78, 78);
+    text-align: center;
+    text-decoration: none;
+    transition: 0.5s;
+    cursor: pointer;
+}
+.dellink:hover {
+    color: pink;
+}
+
+.editlink {
+    font-family: "ElectronicHighway";
+    font-size: 37px;
+    color: rgb(129, 253, 191);
+    text-shadow: 1px 1px 1px rgb(230, 227, 201),
+                 2px 2px 2px rgb(78, 78, 78);
+    text-align: center;
+    text-decoration: none;
+    transition: 0.5s;
+    cursor: pointer;
+}
+.editlink:hover {
+    color: rgb(250, 249, 239);
+}
+
+
+
+.success {
+    font-family: "ElectronicHighway";
+    font-size: 27px;
+    color: rgb(129, 253, 191);
+    text-shadow: 1px 1px 1px rgb(230, 227, 201),
+                 2px 2px 2px rgb(78, 78, 78);
+    text-align: center;
+    text-decoration: none;
+    animation-name: moveDown;
+    animation-duration: 0.7s;
+    transition: 0.5s;
+    cursor: pointer;
+}
+.success a:hover {
+    color: rgb(250, 249, 239);
+}
+
+.error {
+    font-family: "ElectronicHighway";
+    font-size: 27px;
+    color: pink;
+    text-shadow: 1px 1px 1px rgb(230, 227, 201),
+                 2px 2px 2px rgb(78, 78, 78);
+    text-align: center;
+    text-decoration: none;
+    animation-name: moveDown;
+    animation-duration: 0.5s;
+    cursor: pointer;
+}
+.error a:hover {
+    color: rgb(250, 249, 239);
+}
+
+
+
+.menu {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}
+
+.menubtn {
+    font-family: "ElectronicHighway";
+    font-size: 250px;
+    color: rgb(250, 249, 239);
+    text-shadow: 1px 1px 1px rgb(230, 227, 201),
+                 2px 2px 2px rgb(78, 78, 78);
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    cursor: pointer;
+    transition: 0.7s;
+}
+.menubtn:hover {
+    color: pink;
+    outline: none;
+}
+.menubtn:focus {
+    outline: none;
+}
+
+.menu-content {
+    display: none;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0);
+    -webkit-animation-name: bounceIn;
+    animation-name: bounceIn;
+    -webkit-animation-duration: .7s;
+    animation-duration: .7s;
+    -webkit-animation-duration: 0.7s;
+    animation-duration: 0.7s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.menu-content a {
+    font-family: "ElectronicHighway";
+    font-size: 100px;
+    color: rgb(250, 249, 239);
+    text-shadow: 1px 1px 1px rgb(230, 227, 201),
+                 2px 2px 2px rgb(78, 78, 78);
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.menu-content a:hover, .menu-content a:focus {
+    color: rgb(129, 253, 191);
+}
+
+.menulink {
+    font-family: "ElectronicHighway";
+    font-size: 100px;
+    color: rgb(250, 249, 239);
+    text-shadow: 1px 1px 1px rgb(230, 227, 201),
+                 2px 2px 2px rgb(78, 78, 78);
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.menulink:active {
+    color: rgb(129, 253, 191);
+}
+
+.show {
+    display: inline-flex;
+}
+
+
+
+body {
+    background-color: rgb(245, 255, 255);
+}
+
+.content {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    margin: 3%;
+    -webkit-animation-name: bounceIn;
+    animation-name: bounceIn;
+    -webkit-animation-duration: .7s;
+    animation-duration: .7s;
+    -webkit-animation-duration: 0.7s;
+    animation-duration: 0.7s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.a1 {
+    font-family: "Arcade";
+    font-size: 150px;
+    color: rgb(129, 253, 191);
+    text-shadow: 1px 1px 1px rgb(230, 227, 201),
+                 2px 2px 2px rgb(78, 78, 78);
+    text-align: center;
+    text-decoration: none;
+    transition: 0.5s;        
+}
+.a1:hover {
+    color: rgb(250, 249, 239);
+}
+
+.p1 {
+    font-family: "ElectronicHighway";
+    font-size: 37px;
+    color: rgb(250, 249, 239);
+    text-shadow: 1px 1px 1px rgb(230, 227, 201),
+                 2px 2px 2px rgb(78, 78, 78);
+    text-align: center;
+    margin: 10px 0px
+}
+
+
+
+.form {
+    font-family: "ElectronicHighway";
+    font-size: 30px;
+    color: rgb(129, 253, 191);
+    text-shadow: 1px 1px 1px rgb(230, 227, 201),
+                 2px 2px 2px rgb(78, 78, 78);
+    text-align: center;
+    transition: 0.5s;
+}
+.form:hover, .form:focus {
+    color: rgb(250, 249, 239);
+}
+
+.input {
+    font-family: "Arcade";
+    font-size: 120px;
+    color: rgb(250, 249, 239);
+    text-shadow: 1px 1px 1px rgb(230, 227, 201),
+                 2px 2px 2px rgb(78, 78, 78);
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    cursor: pointer;
+    transition: 0.7s;
+}
+.input:hover {
+    color: rgb(255, 192, 203);
+    outline: none;
+}
+.input:focus {
+    outline: none;
+}
+
+
+
+.msg {
+    color: pink;
+    font-size: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.username {
+    color: rgb(250, 249, 239);
+    font-size: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.chatcontent {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    padding: auto;
+    -webkit-animation-name: bounceIn;
+    animation-name: bounceIn;
+    -webkit-animation-duration: .7s;
+    animation-duration: .7s;
+    -webkit-animation-duration: 0.7s;
+    animation-duration: 0.7s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
