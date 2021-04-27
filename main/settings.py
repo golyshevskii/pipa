@@ -26,7 +26,6 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'account.apps.AccountConfig',
     'django.contrib.admin',
@@ -35,6 +34,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',         # приложение social_django для авторизации через google; social_django application for authorization via google
+    'chat.apps.ChatConfig',  # приложение chat
+    'channels',              # приложение channels для ассинхроных задач с Redis(для chatroom); channels application for asynchronous tasks with Redis (for chatroom)
+    'board.apps.BoardConfig' # приложение доска
 ]
 
 MIDDLEWARE = [
@@ -149,3 +152,13 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = 'KEY'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'SECRET KEY'
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
+# подключение channels_redis для использования chatroom
+ASGI_APPLICATION = "pipa.routing.application"
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
