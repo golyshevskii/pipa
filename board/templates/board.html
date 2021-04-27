@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Board{% endblock %}
+<link rel="stylesheet" href="{% static 'board/bootstrap.css' %}">
+{% block content %}
+<div class="content">
+  <a class="addlink" href='#'>add<br><img class="heart1" src="{% static 'images/girl1.gif' %}" height="150px" width="110px"></a>
+</div>
+<div class="container">
+    <div class="row">
+      {% for item in ProfileBoard.objects.all %}
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="block">
+          <a class="a1">{{ item.image }}</a>
+          <a class="a1">{{ item.title }}</a>
+          <a class="a1">{{ item.url }}</p>
+          <p class="p1">{{ item.content }}</p>
+          <a class="editlink" href="#">edit board?</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+</div>
+{% endblock %}
