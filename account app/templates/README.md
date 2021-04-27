@@ -1,1 +1,1 @@
-# HTML templates
+# HTML шаблоны/templates
