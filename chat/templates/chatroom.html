@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Chat Room{% endblock %}
+{% block content %}
+    <div class="chatcontent" id="chat">
+    </div>
+    <div class="chatcontent">
+        <input id="message-input" type="text" size="85">
+        <input class="input" id="btn-submit" type="button" value="send">
+    </div><br>
+    <div class="chatcontent">
+        <a class="addlink" href='#'>
+            <img class="heart1" src="{% static 'images/sakuratree1.gif' %}" height="140px" width="110px">
+        </a>
+    </div>
+    <script>
+        let chat = document.querySelector("#chat")
+        let input = document.querySelector("#message-input")
+        let btnSubmit = document.querySelector("#btn-submit") 
+        const webSocket = new WebSocket('ws://' + window.location.host + '/ws/chat/');  
+        webSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            chat.innerHTML += '<div class="msg">' + data.message + '</div>'
+        };
+        btnSubmit.addEventListener("click", () => {
+            message = input.value;
+            webSocket.send(JSON.stringify({
+                'message': `{{ request.user.username }}: ${message}`
+            }));
+            input.value = '';
+        })
+    </script>
+{% endblock %}
